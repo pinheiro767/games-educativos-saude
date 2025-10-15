@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games Educativos - Prevenção e Autocuidado</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@300;400;700&family=Bungee:wght@400&family=Chewy:wght@400&display=swap');
+        
+        body {
+            box-sizing: border-box;
+            font-family: 'Comic Neue', cursive;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #e8f4f8 0%, #d1e7dd 25%, #f0f8ff 50%, #e8f4f8 75%, #d1e7dd 100%);
+            background-size: 400% 400%;
+            animation: calmBackground 20s ease-in-out infinite;
+            min-height: 100%;
+            color: #333;
+            perspective: 1000px;
+            overflow-x: hidden;
+        }
+
+        @keyframes calmBackground {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: containerEntrance 1s ease-out;
+        }
+
+        @keyframes containerEntrance {
+            from {
+                opacity: 0;
+                transform: perspective(1000px) rotateX(20deg) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: perspective(1000px) rotateX(0deg) translateY(0px);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: rgba(248, 252, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transform: rotateX(5deg) rotateY(-2deg);
+            transition: transform 0.6s ease;
+            border: 2px solid rgba(173, 216, 230, 0.3);
+        }
+
+        .header:hover {
+            transform: rotateX(0deg) rotateY(0deg) scale(1.02);
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8em;
+            background: linear-gradient(45deg, #2d5a87, #4a90a4, #2d5a87, #4a90a4);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 3s ease-in-out infinite;
+            margin-bottom: 20px;
+            font-weight: 400;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                background-position: 0% 50%;
+                transform: scale(1);
+            }
+            50% { 
+                background-position: 100% 50%;
+                transform: scale(1.02);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #666;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .game-card {
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transform-style: preserve-3d;
+            transform: rotateX(10deg) rotateY(5deg);
+            position: relative;
+            overflow: hidden;
+            height: auto;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-card:nth-child(1) {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+        }
+
+        .game-card:nth-child(2) {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            transform: rotateX(8deg) rotateY(-3deg);
+        }
+
+        .game-card:nth-child(3) {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: rotateX(12deg) rotateY(7deg);
+        }
+
+        .game-card:hover {
+            transform: rotateX(0deg) rotateY(0deg) translateY(-15px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .game-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+            transform: translateZ(30px);
+            transition: transform 0.3s ease;
+            text-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-card:hover .game-icon {
+            transform: translateZ(50px) rotateY(360deg);
+        }
+
+        .title-with-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .game-emoji {
+            font-size: 2.5em;
+            animation: emojiFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+        }
+
+        @keyframes emojiFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        .game-card:hover .game-emoji {
+            animation: emojiSpin 0.6s ease-in-out;
+        }
+
+        @keyframes emojiSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Animated Boy Styles */
+        .animated-boy {
+            width: 60px;
+            height: 80px;
+            position: relative;
+            animation: boyFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+        }
+
+        @keyframes boyFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .game-card:hover .animated-boy {
+            animation: boyExcited 0.8s ease-in-out;
+        }
+
+        @keyframes boyExcited {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-5deg); }
+            50% { transform: scale(1.2) rotate(5deg); }
+            75% { transform: scale(1.1) rotate(-3deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .boy-head {
+            position: relative;
+            width: 35px;
+            height: 35px;
+            margin: 0 auto;
+        }
+
+        .boy-hair {
+            width: 35px;
+            height: 20px;
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            border-radius: 20px 20px 5px 5px;
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            animation: hairSway 4s ease-in-out infinite;
+        }
+
+        @keyframes hairSway {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .boy-face {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #FDBCB4, #F4A688);
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            left: 2.5px;
+            z-index: 1;
+        }
+
+        .boy-eye {
+            width: 4px;
+            height: 4px;
+            background: #2C3E50;
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            animation: boyBlink 4s ease-in-out infinite;
+        }
+
+        .boy-eye-left { left: 6px; }
+        .boy-eye-right { right: 6px; }
+
+        @keyframes boyBlink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        .boy-smile {
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 7px;
+            border: 2px solid #E74C3C;
+            border-top: none;
+            border-radius: 0 0 14px 14px;
+            animation: smileGrow 3s ease-in-out infinite;
+        }
+
+        @keyframes smileGrow {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+
+
+
+        .game-title {
+            font-family: 'Chewy', cursive;
+            font-size: 1.8em;
+            font-weight: 400;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            margin: 0;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .game-card:hover .game-title {
+            font-size: 1.4em;
+        }
+
+        .game-description {
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.1em;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .game-card:hover .game-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .play-button {
+            font-family: 'Fredoka One', cursive;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateZ(20px) translateY(0);
+            position: relative;
+            opacity: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .game-card:hover .play-button {
+            opacity: 1;
+            transform: translateZ(20px) translateY(0);
+        }
+
+        .play-button:hover {
+            transform: translateZ(40px) translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .play-button:active {
+            transform: translateZ(10px) translateY(-2px);
+        }
+
+        .click-arrow {
+            font-size: 1.5em;
+            color: rgba(255, 255, 255, 0.8);
+            animation: arrowBounce 2s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 10;
+            margin-top: 10px;
+        }
+
+        @keyframes arrowBounce {
+            0%, 100% { 
+                transform: translateX(0px) rotate(0deg);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translateX(5px) rotate(10deg);
+                opacity: 1;
+            }
+        }
+
+        .game-card:hover .click-arrow {
+            animation: arrowExcited 0.5s ease-in-out infinite;
+        }
+
+        @keyframes arrowExcited {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+            }
+            50% { 
+                transform: scale(1.2) rotate(15deg);
+            }
+        }
+
+        .footer-note {
+            font-family: 'Comic Neue', cursive;
+            margin-top: 40px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1em;
+            font-weight: 400;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Animated Illustrations Styles */
+        .animated-illustration {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        /* Menstrual Icon Animation */
+        .menstrual-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .calendar {
+            width: 30px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            border-radius: 4px;
+            position: relative;
+            animation: calendarFloat 3s ease-in-out infinite;
+        }
+
+        .calendar-header {
+            width: 100%;
+            height: 8px;
+            background: #fff;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            padding: 2px;
+            margin-top: 2px;
+        }
+
+        .day {
+            width: 3px;
+            height: 3px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+        }
+
+        .day.active {
+            background: #fff;
+            animation: dayPulse 2s ease-in-out infinite;
+        }
+
+        .flower-petals {
+            position: relative;
+            width: 40px;
+            height: 40px;
+        }
+
+        .petal {
+            position: absolute;
+            width: 12px;
+            height: 20px;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            border-radius: 50% 50% 50% 0;
+            transform-origin: bottom center;
+        }
+
+        .petal1 { transform: rotate(0deg) translateY(-15px); animation: petalSway1 4s ease-in-out infinite; }
+        .petal2 { transform: rotate(90deg) translateY(-15px); animation: petalSway2 4s ease-in-out infinite; }
+        .petal3 { transform: rotate(180deg) translateY(-15px); animation: petalSway3 4s ease-in-out infinite; }
+        .petal4 { transform: rotate(270deg) translateY(-15px); animation: petalSway4 4s ease-in-out infinite; }
+
+        .flower-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: #ffd93d;
+            border-radius: 50%;
+            animation: centerGlow 2s ease-in-out infinite;
+        }
+
+        /* Teen Icon Animation */
+        .teen-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .teen-face {
+            position: relative;
+            animation: faceFloat 3s ease-in-out infinite;
+        }
+
+        .hair {
+            width: 35px;
+            height: 20px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border-radius: 20px 20px 0 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .face-circle {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            border-radius: 50%;
+            position: relative;
+            margin-top: -5px;
+        }
+
+        .eye {
+            width: 3px;
+            height: 3px;
+            background: #2d3436;
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            animation: eyeBlink 3s ease-in-out infinite;
+        }
+
+        .eye-left { left: 7px; }
+        .eye-right { right: 7px; }
+
+        .smile {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 6px;
+            border: 2px solid #2d3436;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .growth-arrows {
+            display: flex;
+            gap: 3px;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 8px solid #00b894;
+            animation: arrowGrow 2s ease-in-out infinite;
+        }
+
+        .arrow1 { animation-delay: 0s; }
+        .arrow2 { animation-delay: 0.3s; }
+        .arrow3 { animation-delay: 0.6s; }
+
+        /* Health Icon Animation */
+        .health-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .heart-pulse {
+            position: relative;
+        }
+
+        .heart {
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(135deg, #fa709a, #fee140);
+            transform: rotate(-45deg);
+            border-radius: 50% 0;
+            position: relative;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(135deg, #fa709a, #fee140);
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -12px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 12px;
+        }
+
+        .pulse-line {
+            position: absolute;
+            top: 50%;
+            right: -15px;
+            width: 20px;
+            height: 2px;
+            background: #00b894;
+        }
+
+        .pulse {
+            width: 4px;
+            height: 4px;
+            background: #00b894;
+            border-radius: 50%;
+            position: absolute;
+            top: -1px;
+            animation: pulseMove 2s linear infinite;
+        }
+
+        .protection-shield {
+            position: relative;
+        }
+
+        .shield {
+            width: 25px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50% 50% 0 0;
+            position: relative;
+            animation: shieldGlow 3s ease-in-out infinite;
+        }
+
+        .cross {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 2px;
+            background: #fff;
+        }
+
+        .cross::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 5px;
+            width: 2px;
+            height: 12px;
+            background: #fff;
+        }
+
+        /* Animations */
+        @keyframes calendarFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+
+        @keyframes dayPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes petalSway1 {
+            0%, 100% { transform: rotate(0deg) translateY(-15px) scale(1); }
+            50% { transform: rotate(5deg) translateY(-15px) scale(1.1); }
+        }
+
+        @keyframes petalSway2 {
+            0%, 100% { transform: rotate(90deg) translateY(-15px) scale(1); }
+            50% { transform: rotate(95deg) translateY(-15px) scale(1.1); }
+        }
+
+        @keyframes petalSway3 {
+            0%, 100% { transform: rotate(180deg) translateY(-15px) scale(1); }
+            50% { transform: rotate(185deg) translateY(-15px) scale(1.1); }
+        }
+
+        @keyframes petalSway4 {
+            0%, 100% { transform: rotate(270deg) translateY(-15px) scale(1); }
+            50% { transform: rotate(275deg) translateY(-15px) scale(1.1); }
+        }
+
+        @keyframes centerGlow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        @keyframes faceFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-2px); }
+        }
+
+        @keyframes eyeBlink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        @keyframes arrowGrow {
+            0%, 100% { transform: scaleY(1); opacity: 0.7; }
+            50% { transform: scaleY(1.3); opacity: 1; }
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: rotate(-45deg) scale(1); }
+            50% { transform: rotate(-45deg) scale(1.1); }
+        }
+
+        @keyframes pulseMove {
+            0% { left: 0; opacity: 1; }
+            100% { left: 16px; opacity: 0; }
+        }
+
+        @keyframes shieldGlow {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.05); filter: brightness(1.2); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .game-card {
+                padding: 25px 20px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .animated-illustration {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Games Educativos</h1>
+            <h2 style="font-family: 'Bungee', cursive; background: linear-gradient(45deg, #4a90a4, #2d5a87, #4a90a4); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: subtitleFloat 4s ease-in-out infinite; font-size: 1.3em; margin: 10px 0; letter-spacing: 1px;">Projeto Prevenção e Autocuidado na Saúde Reprodutiva</h2>
+            <style>
+                @keyframes subtitleFloat {
+                    0%, 100% { 
+                        background-position: 0% 50%;
+                        transform: translateY(0px);
+                    }
+                    50% { 
+                        background-position: 100% 50%;
+                        transform: translateY(-3px);
+                    }
+                }
+            </style>
+            <p class="subtitle">
+                São games que ensinam de uma maneira simples e divertida sobre a prevenção e autocuidado na saúde reprodutiva para todas as idades - desde jovens até idosos. Explore, aprenda e cuide da sua saúde!
+            </p>
+        </div>
+
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="card-content">
+                    <div class="title-with-icon">
+                        <span class="game-emoji">🌸</span>
+                        <h3 class="game-title">Higiene Menstrual</h3>
+                        <div class="click-arrow">👆</div>
+                    </div>
+                    <p class="game-description">
+                        Aprenda sobre cuidados essenciais durante o ciclo menstrual de forma interativa e educativa.
+                    </p>
+                    <a href="https://pinheiro767.github.io/ciclo-respeito-cris/" class="play-button" target="_blank" rel="noopener noreferrer">
+                        🎮 Jogar Agora
+                    </a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="card-content">
+                    <div class="title-with-icon">
+                        <span class="game-emoji">👦</span>
+                        <h3 class="game-title">Descobrindo a Puberdade Masculina</h3>
+                        <div class="click-arrow">👆</div>
+                    </div>
+                    <p class="game-description">
+                        Explore as mudanças da puberdade masculina e aprenda sobre autocuidado de forma divertida.
+                    </p>
+                    <a href="https://pinheiro767.github.io/Jogo-Puberdade/" class="play-button" target="_blank" rel="noopener noreferrer">
+                        🎮 Jogar Agora
+                    </a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="card-content">
+                    <div class="title-with-icon">
+                        <span class="game-emoji">❤️‍🩹</span>
+                        <h3 class="game-title">Saúde Sexual</h3>
+                        <div class="click-arrow">👆</div>
+                    </div>
+                    <p class="game-description">
+                        Descubra informações importantes sobre saúde sexual e reprodutiva através de atividades interativas.
+                    </p>
+                    <a href="https://pinheiro767.github.io/jogo-saude-reprodutiva/" class="play-button" target="_blank" rel="noopener noreferrer">
+                        🎮 Jogar Agora
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            ✨ Os jogos serão abertos em uma nova aba para uma melhor experiência de aprendizado
+        </div>
+    </div>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f0df8c103b3472',t:'MTc2MDU0NzYzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
