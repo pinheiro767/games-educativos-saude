@@ -1,738 +1,495 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Games Educativos - Prevenção e Autocuidado</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@300;400;700&family=Bungee:wght@400&family=Chewy:wght@400&display=swap');
-        
+<!doctype html>
+<html lang="pt-br">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto: Prevenção e Autocuidado na Saúde Reprodutiva</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
         body {
             box-sizing: border-box;
-            font-family: 'Comic Neue', cursive;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background: linear-gradient(45deg, #e8f4f8 0%, #d1e7dd 25%, #f0f8ff 50%, #e8f4f8 75%, #d1e7dd 100%);
-            background-size: 400% 400%;
-            animation: calmBackground 20s ease-in-out infinite;
-            min-height: 100%;
+            padding: 20px;
+            background: transparent;
             color: #333;
-            perspective: 1000px;
+            min-height: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            position: relative;
             overflow-x: hidden;
         }
-
-        @keyframes calmBackground {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        html {
+        
+        /* Animated floating bubbles background */
+        .bubbles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
         }
-
+        
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.05));
+            animation: floatUp linear infinite;
+            opacity: 0;
+        }
+        
+        .bubble:nth-child(1) { left: 10%; width: 20px; height: 20px; animation-duration: 8s; animation-delay: 0s; }
+        .bubble:nth-child(2) { left: 20%; width: 15px; height: 15px; animation-duration: 12s; animation-delay: 1s; }
+        .bubble:nth-child(3) { left: 35%; width: 25px; height: 25px; animation-duration: 10s; animation-delay: 2s; }
+        .bubble:nth-child(4) { left: 50%; width: 18px; height: 18px; animation-duration: 14s; animation-delay: 0.5s; }
+        .bubble:nth-child(5) { left: 65%; width: 22px; height: 22px; animation-duration: 9s; animation-delay: 3s; }
+        .bubble:nth-child(6) { left: 80%; width: 16px; height: 16px; animation-duration: 11s; animation-delay: 1.5s; }
+        .bubble:nth-child(7) { left: 15%; width: 30px; height: 30px; animation-duration: 13s; animation-delay: 4s; }
+        .bubble:nth-child(8) { left: 45%; width: 12px; height: 12px; animation-duration: 7s; animation-delay: 2.5s; }
+        .bubble:nth-child(9) { left: 75%; width: 28px; height: 28px; animation-duration: 15s; animation-delay: 0.8s; }
+        .bubble:nth-child(10) { left: 25%; width: 14px; height: 14px; animation-duration: 6s; animation-delay: 3.5s; }
+        .bubble:nth-child(11) { left: 55%; width: 24px; height: 24px; animation-duration: 16s; animation-delay: 1.2s; }
+        .bubble:nth-child(12) { left: 85%; width: 19px; height: 19px; animation-duration: 8.5s; animation-delay: 4.5s; }
+        
+        @keyframes floatUp {
+            0% {
+                bottom: -100px;
+                opacity: 0;
+                transform: translateX(0px) rotate(0deg) scale(0.8);
+            }
+            10% {
+                opacity: 0.6;
+                transform: translateX(10px) rotate(45deg) scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateX(-20px) rotate(180deg) scale(1.1);
+            }
+            90% {
+                opacity: 0.3;
+                transform: translateX(15px) rotate(315deg) scale(0.9);
+            }
+            100% {
+                bottom: 100vh;
+                opacity: 0;
+                transform: translateX(-10px) rotate(360deg) scale(0.7);
+            }
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
-            min-height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: containerEntrance 1s ease-out;
-        }
-
-        @keyframes containerEntrance {
-            from {
-                opacity: 0;
-                transform: perspective(1000px) rotateX(20deg) translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: perspective(1000px) rotateX(0deg) translateY(0px);
-            }
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
-            background: rgba(248, 252, 255, 0.95);
+            background-color: rgba(255, 255, 255, 0.95);
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(10px);
-            transform: rotateX(5deg) rotateY(-2deg);
-            transition: transform 0.6s ease;
-            border: 2px solid rgba(173, 216, 230, 0.3);
+            animation: fadeIn 0.8s ease-out;
         }
-
-        .header:hover {
-            transform: rotateX(0deg) rotateY(0deg) scale(1.02);
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
+        
+        .project-title {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            border-radius: 15px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 25px rgba(116, 185, 255, 0.3);
+        }
+        
         h1 {
-            font-family: 'Fredoka One', cursive;
+            color: #2c3e50;
             font-size: 2.8em;
-            background: linear-gradient(45deg, #2d5a87, #4a90a4, #2d5a87, #4a90a4);
+            margin: 30px 0;
+            text-align: center;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #667eea);
             background-size: 300% 300%;
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: titleGlow 3s ease-in-out infinite;
+            background-clip: text;
+            font-weight: 800;
+            animation: gradientMove 3s ease-in-out infinite, titleBounce 2s ease-in-out infinite;
+            transform-origin: center;
+        }
+        
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes titleBounce {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-5px) scale(1.02); }
+        }
+        
+        .intro-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 1.15em;
             margin-bottom: 20px;
-            font-weight: 400;
-            line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            letter-spacing: 1px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        @keyframes titleGlow {
-            0%, 100% { 
-                background-position: 0% 50%;
-                transform: scale(1);
-            }
-            50% { 
-                background-position: 100% 50%;
-                transform: scale(1.02);
-            }
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
         }
 
-        .subtitle {
+        .call-to-action {
             font-size: 1.3em;
-            color: #666;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 40px 0;
+            text-align: center;
         }
 
+        /* Layout de Cards */
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            width: 100%;
-            max-width: 1100px;
+            margin-top: 40px;
         }
 
         .game-card {
+            background: white;
             border-radius: 20px;
             padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            transform-style: preserve-3d;
-            transform: rotateX(10deg) rotateY(5deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
-            height: auto;
-            min-height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 2px solid transparent;
         }
 
-        .game-card:nth-child(1) {
-            background: linear-gradient(135deg, #ff6b9d, #c44569);
-        }
-
-        .game-card:nth-child(2) {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            transform: rotateX(8deg) rotateY(-3deg);
-        }
-
-        .game-card:nth-child(3) {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            transform: rotateX(12deg) rotateY(7deg);
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--card-gradient);
+            border-radius: 20px 20px 0 0;
         }
 
         .game-card:hover {
-            transform: rotateX(0deg) rotateY(0deg) translateY(-15px) scale(1.05);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border-color: var(--card-color);
         }
 
-        .game-icon {
-            font-size: 4em;
+        .card-icon {
+            font-size: 3.5em;
             margin-bottom: 20px;
-            display: block;
-            transform: translateZ(30px);
-            transition: transform 0.3s ease;
-            text-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .game-card:hover .game-icon {
-            transform: translateZ(50px) rotateY(360deg);
-        }
-
-        .title-with-icon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .game-emoji {
-            font-size: 2.5em;
-            animation: emojiFloat 3s ease-in-out infinite;
-            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
-        }
-
-        @keyframes emojiFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(5deg); }
-        }
-
-        .game-card:hover .game-emoji {
-            animation: emojiSpin 0.6s ease-in-out;
-        }
-
-        @keyframes emojiSpin {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.2); }
-            100% { transform: rotate(360deg) scale(1); }
-        }
-
-        /* Animated Boy Styles */
-        .animated-boy {
-            width: 60px;
-            height: 80px;
-            position: relative;
-            animation: boyFloat 3s ease-in-out infinite;
-            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
-        }
-
-        @keyframes boyFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .game-card:hover .animated-boy {
-            animation: boyExcited 0.8s ease-in-out;
-        }
-
-        @keyframes boyExcited {
-            0% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.1) rotate(-5deg); }
-            50% { transform: scale(1.2) rotate(5deg); }
-            75% { transform: scale(1.1) rotate(-3deg); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-
-        .boy-head {
-            position: relative;
-            width: 35px;
-            height: 35px;
-            margin: 0 auto;
-        }
-
-        .boy-hair {
-            width: 35px;
-            height: 20px;
-            background: linear-gradient(135deg, #8B4513, #A0522D);
-            border-radius: 20px 20px 5px 5px;
-            position: absolute;
-            top: 0;
-            z-index: 2;
-            animation: hairSway 4s ease-in-out infinite;
-        }
-
-        @keyframes hairSway {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(2deg); }
-        }
-
-        .boy-face {
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(135deg, #FDBCB4, #F4A688);
-            border-radius: 50%;
-            position: absolute;
-            top: 8px;
-            left: 2.5px;
-            z-index: 1;
-        }
-
-        .boy-eye {
-            width: 4px;
-            height: 4px;
-            background: #2C3E50;
-            border-radius: 50%;
-            position: absolute;
-            top: 8px;
-            animation: boyBlink 4s ease-in-out infinite;
-        }
-
-        .boy-eye-left { left: 6px; }
-        .boy-eye-right { right: 6px; }
-
-        @keyframes boyBlink {
-            0%, 90%, 100% { transform: scaleY(1); }
-            95% { transform: scaleY(0.1); }
-        }
-
-        .boy-smile {
-            position: absolute;
-            bottom: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 14px;
-            height: 7px;
-            border: 2px solid #E74C3C;
-            border-top: none;
-            border-radius: 0 0 14px 14px;
-            animation: smileGrow 3s ease-in-out infinite;
-        }
-
-        @keyframes smileGrow {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.1); }
-        }
-
-
-
-        .game-title {
-            font-family: 'Chewy', cursive;
-            font-size: 1.8em;
-            font-weight: 400;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            margin: 0;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
             text-align: center;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
         }
 
-        .game-card:hover .game-title {
+        .card-title {
             font-size: 1.4em;
-        }
-
-        .game-description {
-            font-family: 'Comic Neue', cursive;
-            font-size: 1.1em;
-            font-weight: 400;
-            color: white;
-            margin-bottom: 25px;
-            line-height: 1.5;
-            opacity: 1;
-            transform: translateY(0);
-            transition: all 0.3s ease;
-        }
-
-        .game-card:hover .game-description {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .play-button {
-            font-family: 'Fredoka One', cursive;
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 400;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transform: translateZ(20px) translateY(0);
-            position: relative;
-            opacity: 1;
-            letter-spacing: 0.5px;
-        }
-
-        .game-card:hover .play-button {
-            opacity: 1;
-            transform: translateZ(20px) translateY(0);
-        }
-
-        .play-button:hover {
-            transform: translateZ(40px) translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 1);
-        }
-
-        .play-button:active {
-            transform: translateZ(10px) translateY(-2px);
-        }
-
-        .click-arrow {
-            font-size: 1.5em;
-            color: rgba(255, 255, 255, 0.8);
-            animation: arrowBounce 2s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 10;
-            margin-top: 10px;
-        }
-
-        @keyframes arrowBounce {
-            0%, 100% { 
-                transform: translateX(0px) rotate(0deg);
-                opacity: 0.8;
-            }
-            50% { 
-                transform: translateX(5px) rotate(10deg);
-                opacity: 1;
-            }
-        }
-
-        .game-card:hover .click-arrow {
-            animation: arrowExcited 0.5s ease-in-out infinite;
-        }
-
-        @keyframes arrowExcited {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg);
-            }
-            50% { 
-                transform: scale(1.2) rotate(15deg);
-            }
-        }
-
-        .footer-note {
-            font-family: 'Comic Neue', cursive;
-            margin-top: 40px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
             text-align: center;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1em;
-            font-weight: 400;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px 25px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
         }
 
-        /* Animated Illustrations Styles */
-        .animated-illustration {
-            width: 80px;
-            height: 80px;
-            position: relative;
-            margin: 0 auto;
+        .card-focus {
+            font-size: 1.1em;
+            color: var(--card-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        /* Menstrual Icon Animation */
-        .menstrual-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        .card-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: center;
         }
 
-        .calendar {
-            width: 30px;
-            height: 35px;
-            background: linear-gradient(135deg, #ff6b9d, #c44569);
-            border-radius: 4px;
-            position: relative;
-            animation: calendarFloat 3s ease-in-out infinite;
+        /* Cores específicas para cada card */
+        .card-puberdade {
+            --card-color: #0984e3;
+            --card-gradient: linear-gradient(135deg, #74b9ff, #0984e3);
         }
 
-        .calendar-header {
+        .card-saude {
+            --card-color: #00b894;
+            --card-gradient: linear-gradient(135deg, #55efc4, #00b894);
+        }
+
+        .card-ciclo {
+            --card-color: #e84393;
+            --card-gradient: linear-gradient(135deg, #fd79a8, #e84393);
+        }
+
+        .card-hpv {
+            --card-color: #6c5ce7;
+            --card-gradient: linear-gradient(135deg, #a29bfe, #6c5ce7);
+        }
+
+        /* Botões dos Cards - iOS Optimized */
+        .card-button {
+            display: block;
             width: 100%;
-            height: 8px;
-            background: #fff;
-            border-radius: 4px 4px 0 0;
-        }
-
-        .calendar-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 1px;
-            padding: 2px;
-            margin-top: 2px;
-        }
-
-        .day {
-            width: 3px;
-            height: 3px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-        }
-
-        .day.active {
-            background: #fff;
-            animation: dayPulse 2s ease-in-out infinite;
-        }
-
-        .flower-petals {
+            background: var(--card-gradient);
+            color: white;
+            padding: 18px 25px; /* Increased padding for better touch targets */
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
             position: relative;
-            width: 40px;
-            height: 40px;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            min-height: 44px; /* iOS recommended minimum touch target */
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            -webkit-appearance: none;
+            /* iOS accessibility improvements */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* Better touch response */
+            touch-action: manipulation;
+            /* Prevent iOS zoom on double tap */
+            -ms-touch-action: manipulation;
+            /* ARIA and accessibility */
+            role: button;
+            tabindex: 0;
         }
 
-        .petal {
-            position: absolute;
-            width: 12px;
-            height: 20px;
-            background: linear-gradient(135deg, #ff9a9e, #fecfef);
-            border-radius: 50% 50% 50% 0;
-            transform-origin: bottom center;
-        }
-
-        .petal1 { transform: rotate(0deg) translateY(-15px); animation: petalSway1 4s ease-in-out infinite; }
-        .petal2 { transform: rotate(90deg) translateY(-15px); animation: petalSway2 4s ease-in-out infinite; }
-        .petal3 { transform: rotate(180deg) translateY(-15px); animation: petalSway3 4s ease-in-out infinite; }
-        .petal4 { transform: rotate(270deg) translateY(-15px); animation: petalSway4 4s ease-in-out infinite; }
-
-        .flower-center {
+        .card-button::before {
+            content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            background: #ffd93d;
-            border-radius: 50%;
-            animation: centerGlow 2s ease-in-out infinite;
-        }
-
-        /* Teen Icon Animation */
-        .teen-icon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .teen-face {
-            position: relative;
-            animation: faceFloat 3s ease-in-out infinite;
-        }
-
-        .hair {
-            width: 35px;
-            height: 20px;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            border-radius: 20px 20px 0 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .face-circle {
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
-            border-radius: 50%;
-            position: relative;
-            margin-top: -5px;
-        }
-
-        .eye {
-            width: 3px;
-            height: 3px;
-            background: #2d3436;
-            border-radius: 50%;
-            position: absolute;
-            top: 8px;
-            animation: eyeBlink 3s ease-in-out infinite;
-        }
-
-        .eye-left { left: 7px; }
-        .eye-right { right: 7px; }
-
-        .smile {
-            position: absolute;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 6px;
-            border: 2px solid #2d3436;
-            border-top: none;
-            border-radius: 0 0 12px 12px;
-        }
-
-        .growth-arrows {
-            display: flex;
-            gap: 3px;
-        }
-
-        .arrow {
             width: 0;
             height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-bottom: 8px solid #00b894;
-            animation: arrowGrow 2s ease-in-out infinite;
-        }
-
-        .arrow1 { animation-delay: 0s; }
-        .arrow2 { animation-delay: 0.3s; }
-        .arrow3 { animation-delay: 0.6s; }
-
-        /* Health Icon Animation */
-        .health-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .heart-pulse {
-            position: relative;
-        }
-
-        .heart {
-            width: 25px;
-            height: 25px;
-            background: linear-gradient(135deg, #fa709a, #fee140);
-            transform: rotate(-45deg);
-            border-radius: 50% 0;
-            position: relative;
-            animation: heartBeat 1.5s ease-in-out infinite;
-        }
-
-        .heart::before,
-        .heart::after {
-            content: '';
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            background: linear-gradient(135deg, #fa709a, #fee140);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-        }
-
-        .heart::before {
-            top: -12px;
-            left: 0;
-        }
-
-        .heart::after {
-            top: 0;
-            left: 12px;
-        }
-
-        .pulse-line {
-            position: absolute;
-            top: 50%;
-            right: -15px;
-            width: 20px;
-            height: 2px;
-            background: #00b894;
-        }
-
-        .pulse {
-            width: 4px;
-            height: 4px;
-            background: #00b894;
-            border-radius: 50%;
-            position: absolute;
-            top: -1px;
-            animation: pulseMove 2s linear infinite;
-        }
-
-        .protection-shield {
-            position: relative;
-        }
-
-        .shield {
-            width: 25px;
-            height: 30px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50% 50% 0 0;
-            position: relative;
-            animation: shieldGlow 3s ease-in-out infinite;
-        }
-
-        .cross {
-            position: absolute;
-            top: 50%;
-            left: 50%;
             transform: translate(-50%, -50%);
-            width: 12px;
-            height: 2px;
-            background: #fff;
+            transition: all 0.6s ease;
         }
 
-        .cross::after {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: 5px;
-            width: 2px;
-            height: 12px;
-            background: #fff;
+        .card-button:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
-        /* Animations */
-        @keyframes calendarFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-3px); }
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
         }
 
-        @keyframes dayPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .card-button:active {
+            transform: translateY(0);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
-        @keyframes petalSway1 {
-            0%, 100% { transform: rotate(0deg) translateY(-15px) scale(1); }
-            50% { transform: rotate(5deg) translateY(-15px) scale(1.1); }
+        .card-button span {
+            position: relative;
+            z-index: 1;
         }
-
-        @keyframes petalSway2 {
-            0%, 100% { transform: rotate(90deg) translateY(-15px) scale(1); }
-            50% { transform: rotate(95deg) translateY(-15px) scale(1.1); }
+        
+        .footer {
+            margin-top: 60px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            font-size: 1em;
+            color: #6c757d;
+            text-align: center;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
-
-        @keyframes petalSway3 {
-            0%, 100% { transform: rotate(180deg) translateY(-15px) scale(1); }
-            50% { transform: rotate(185deg) translateY(-15px) scale(1.1); }
+        
+        /* iOS-Optimized Responsive Design */
+        
+        /* iOS Safe Area Support */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right));
+                padding-top: max(20px, env(safe-area-inset-top));
+                padding-bottom: max(20px, env(safe-area-inset-bottom));
+            }
         }
-
-        @keyframes petalSway4 {
-            0%, 100% { transform: rotate(270deg) translateY(-15px) scale(1); }
-            50% { transform: rotate(275deg) translateY(-15px) scale(1.1); }
+        
+        /* iOS Scroll Behavior */
+        body {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
         }
-
-        @keyframes centerGlow {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.2); }
+        
+        .container {
+            -webkit-overflow-scrolling: touch;
         }
-
-        @keyframes faceFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-2px); }
-        }
-
-        @keyframes eyeBlink {
-            0%, 90%, 100% { transform: scaleY(1); }
-            95% { transform: scaleY(0.1); }
-        }
-
-        @keyframes arrowGrow {
-            0%, 100% { transform: scaleY(1); opacity: 0.7; }
-            50% { transform: scaleY(1.3); opacity: 1; }
-        }
-
-        @keyframes heartBeat {
-            0%, 100% { transform: rotate(-45deg) scale(1); }
-            50% { transform: rotate(-45deg) scale(1.1); }
-        }
-
-        @keyframes pulseMove {
-            0% { left: 0; opacity: 1; }
-            100% { left: 16px; opacity: 0; }
-        }
-
-        @keyframes shieldGlow {
-            0%, 100% { transform: scale(1); filter: brightness(1); }
-            50% { transform: scale(1.05); filter: brightness(1.2); }
-        }
-
-        @media (max-width: 768px) {
+        
+        /* Tablet Landscape (iPad) */
+        @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+            .games-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
             .container {
-                padding: 20px 15px;
+                padding: 30px;
             }
-
+            
             h1 {
-                font-size: 2em;
+                font-size: 2.5em;
             }
-
-            .subtitle {
+        }
+        
+        /* Tablet Portrait (iPad) */
+        @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+            body {
+                padding: 20px;
+            }
+            
+            .container {
+                padding: 30px;
+                max-width: 700px;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            h1 {
+                font-size: 2.4em;
+                line-height: 1.2;
+            }
+            
+            .project-title {
+                font-size: 1.2em;
+                padding: 20px;
+            }
+            
+            .game-card {
+                padding: 30px;
+            }
+            
+            .card-button {
+                padding: 20px 25px;
                 font-size: 1.1em;
+                min-height: 50px;
+            }
+        }
+
+        /* Mobile Landscape (iPhone) */
+        @media (max-width: 767px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+                margin: 0;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+                margin: 15px 0;
+            }
+            
+            .project-title {
+                font-size: 1em;
+                padding: 12px;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .game-card {
+                padding: 20px;
+            }
+            
+            .card-icon {
+                font-size: 2.5em;
+                margin-bottom: 10px;
+            }
+            
+            .card-title {
+                font-size: 1.1em;
+                margin-bottom: 8px;
+            }
+            
+            .card-focus {
+                font-size: 0.9em;
+                margin-bottom: 8px;
+            }
+            
+            .card-description {
+                font-size: 0.85em;
+                margin-bottom: 15px;
+            }
+            
+            .card-button {
+                padding: 12px 16px;
+                font-size: 0.9em;
+                min-height: 44px;
+            }
+        }
+
+        /* Mobile Portrait - Standard */
+        @media (max-width: 767px) and (orientation: portrait) {
+            body {
+                padding: 15px;
+            }
+            
+            .container {
+                padding: 20px;
+                margin: 0;
+                border-radius: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+                line-height: 1.2;
+                margin: 25px 0;
+            }
+            
+            .project-title {
+                font-size: 1.1em;
+                padding: 15px;
+                line-height: 1.3;
             }
 
             .games-grid {
@@ -741,95 +498,656 @@
             }
 
             .game-card {
-                padding: 25px 20px;
+                padding: 25px;
+                margin-bottom: 10px;
             }
 
-            .header {
-                padding: 30px 20px;
+            .card-icon {
+                font-size: 3em;
             }
 
-            .animated-illustration {
-                width: 70px;
-                height: 70px;
+            p {
+                font-size: 1em;
+                line-height: 1.6;
+            }
+            
+            .call-to-action {
+                font-size: 1.2em;
+                margin: 30px 0;
             }
         }
+
+        /* iPhone SE and smaller devices */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+                margin: 0;
+                border-radius: 12px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin: 20px 0;
+                line-height: 1.1;
+            }
+
+            .project-title {
+                font-size: 1em;
+                padding: 12px;
+                line-height: 1.2;
+            }
+
+            .game-card {
+                padding: 20px;
+                border-radius: 15px;
+            }
+
+            .card-icon {
+                font-size: 2.5em;
+                margin-bottom: 15px;
+            }
+
+            .card-title {
+                font-size: 1.2em;
+                margin-bottom: 12px;
+                line-height: 1.2;
+            }
+
+            .card-focus {
+                font-size: 1em;
+                margin-bottom: 12px;
+                line-height: 1.3;
+            }
+
+            .card-description {
+                font-size: 0.9em;
+                margin-bottom: 20px;
+                line-height: 1.4;
+            }
+
+            .card-button {
+                padding: 16px 20px;
+                font-size: 1em;
+                min-height: 48px;
+            }
+            
+            p {
+                font-size: 0.95em;
+                margin-bottom: 18px;
+                line-height: 1.5;
+            }
+            
+            .call-to-action {
+                font-size: 1.1em;
+                margin: 25px 0;
+                line-height: 1.3;
+            }
+            
+            .footer {
+                margin-top: 40px;
+                padding: 20px;
+                font-size: 0.9em;
+                line-height: 1.4;
+            }
+        }
+
+        /* Very small devices (iPhone 5/SE) */
+        @media (max-width: 360px) {
+            .container {
+                padding: 12px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+                line-height: 1.1;
+            }
+            
+            .project-title {
+                font-size: 0.9em;
+                padding: 10px;
+                line-height: 1.2;
+            }
+            
+            .game-card {
+                padding: 15px;
+            }
+            
+            .card-button {
+                padding: 14px 18px;
+                font-size: 0.95em;
+                min-height: 44px;
+            }
+            
+            .card-title {
+                font-size: 1.1em;
+            }
+            
+            .card-focus {
+                font-size: 0.9em;
+            }
+            
+            .card-description {
+                font-size: 0.85em;
+            }
+        }
+        
+        /* iOS-specific optimizations */
+        @supports (-webkit-touch-callout: none) {
+            /* iOS Safari specific styles */
+            .card-button {
+                -webkit-appearance: none;
+                border: none;
+                outline: none;
+            }
+            
+            /* Prevent iOS zoom on input focus */
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+            
+            /* iOS scroll momentum */
+            .container {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* Animações adicionais */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .card-icon:hover {
+            animation: pulse 0.6s ease-in-out;
+        }
+        
+        .game-controller-icon {
+            display: inline-block;
+            margin-right: 15px;
+            vertical-align: middle;
+            animation: controllerFloat 3s ease-in-out infinite, controllerGlow 2s ease-in-out infinite alternate;
+            filter: drop-shadow(0 6px 12px rgba(102, 126, 234, 0.3));
+        }
+        
+        @keyframes controllerFloat {
+            0%, 100% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+        
+        @keyframes controllerGlow {
+            0% { filter: drop-shadow(0 6px 12px rgba(102, 126, 234, 0.3)); }
+            100% { filter: drop-shadow(0 8px 20px rgba(102, 126, 234, 0.6)); }
+        }
+        
+        .game-controller-icon:hover {
+            animation: controllerExcited 0.5s ease-in-out infinite;
+        }
+        
+        @keyframes controllerExcited {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-5deg); }
+            75% { transform: scale(1.1) rotate(5deg); }
+        }
     </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Games Educativos</h1>
-            <h2 style="font-family: 'Bungee', cursive; background: linear-gradient(45deg, #4a90a4, #2d5a87, #4a90a4); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: subtitleFloat 4s ease-in-out infinite; font-size: 1.3em; margin: 10px 0; letter-spacing: 1px;">Projeto Prevenção e Autocuidado na Saúde Reprodutiva</h2>
-            <style>
-                @keyframes subtitleFloat {
-                    0%, 100% { 
-                        background-position: 0% 50%;
-                        transform: translateY(0px);
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Animated bubbles background -->
+  <div class="bubbles-container">
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+   <div class="bubble"></div>
+  </div>
+  <main>
+   <div class="container">
+    <div class="project-title" id="project-title">
+     Games Educativos: Saúde Reprodutiva em Jogo
+    </div>
+    <h1 id="main-title">
+     <svg class="game-controller-icon" width="70" height="70" viewbox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><defs><!-- 3D Gradients for realistic depth -->
+       <lineargradient id="controller3D" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+        <stop offset="30%" style="stop-color:#e9ecef;stop-opacity:1" />
+        <stop offset="70%" style="stop-color:#dee2e6;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#adb5bd;stop-opacity:1" />
+       </lineargradient>
+       <radialgradient id="controller3DTop" cx="50%" cy="30%" r="70%">
+        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
+        <stop offset="50%" style="stop-color:#f8f9fa;stop-opacity:0.7" />
+        <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:0.3" />
+       </radialgradient>
+       <lineargradient id="buttonRed3D" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#e84393;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#c44569;stop-opacity:1" />
+       </lineargradient>
+       <lineargradient id="buttonGreen3D" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#51cf66;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#00b894;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#0ca678;stop-opacity:1" />
+       </lineargradient>
+       <lineargradient id="buttonBlue3D" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#74b9ff;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#0984e3;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#0770c4;stop-opacity:1" />
+       </lineargradient>
+       <lineargradient id="buttonYellow3D" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ffeaa7;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#fdcb6e;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#e17055;stop-opacity:1" />
+       </lineargradient>
+       <lineargradient id="dpad3D" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#636e72;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#2d3436;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+       </lineargradient> <!-- Shadow filters -->
+       <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+        <fedropshadow dx="2" dy="4" stddeviation="3" flood-color="#000000" flood-opacity="0.3" />
+       </filter>
+       <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feoffset dx="0" dy="2" />
+        <fegaussianblur stddeviation="2" result="offset-blur" />
+        <feflood flood-color="#000000" flood-opacity="0.2" />
+        <fecomposite in2="offset-blur" operator="in" />
+       </filter>
+      </defs> <!-- Controller shadow --> <ellipse cx="60" cy="75" rx="35" ry="8" fill="#000000" opacity="0.2" /> <!-- Main controller body with 3D effect --> <path d="M25 45 Q25 35 35 35 L85 35 Q95 35 95 45 L95 55 Q95 65 85 65 L75 65 Q75 70 70 70 L50 70 Q45 70 45 65 L35 65 Q25 65 25 55 Z" fill="url(#controller3D)" stroke="#495057" stroke-width="1.5" filter="url(#shadow)" /> <!-- Controller top highlight for 3D effect --> <path d="M25 45 Q25 35 35 35 L85 35 Q95 35 95 45 L95 55 Q95 65 85 65 L75 65 Q75 70 70 70 L50 70 Q45 70 45 65 L35 65 Q25 65 25 55 Z" fill="url(#controller3DTop)" opacity="0.6" /> <!-- Left grip with 3D shading --> <ellipse cx="30" cy="55" rx="12" ry="18" fill="url(#controller3D)" stroke="#495057" stroke-width="1" filter="url(#shadow)" /> <ellipse cx="30" cy="55" rx="12" ry="18" fill="url(#controller3DTop)" opacity="0.4" /> <!-- Right grip with 3D shading --> <ellipse cx="90" cy="55" rx="12" ry="18" fill="url(#controller3D)" stroke="#495057" stroke-width="1" filter="url(#shadow)" /> <ellipse cx="90" cy="55" rx="12" ry="18" fill="url(#controller3DTop)" opacity="0.4" /> <!-- D-pad with realistic 3D buttons --> <!-- Horizontal bar --> <rect x="35" y="48" width="12" height="4" rx="2" fill="url(#dpad3D)" filter="url(#shadow)" /> <rect x="35" y="48" width="12" height="2" rx="1" fill="#74797e" opacity="0.8" /> <!-- Vertical bar --> <rect x="39" y="44" width="4" height="12" rx="2" fill="url(#dpad3D)" filter="url(#shadow)" /> <rect x="39" y="44" width="4" height="6" rx="1" fill="#74797e" opacity="0.8" /> <!-- Action buttons with realistic 3D effect --> <!-- X Button (Red) --> <circle cx="75" cy="48" r="5" fill="url(#buttonRed3D)" stroke="#c44569" stroke-width="1" filter="url(#shadow)" /> <circle cx="75" cy="47" r="3" fill="#ff6b6b" opacity="0.8" /> <text x="75" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="white">
+       X
+      </text> <!-- A Button (Green) --> <circle cx="85" cy="48" r="5" fill="url(#buttonGreen3D)" stroke="#0ca678" stroke-width="1" filter="url(#shadow)" /> <circle cx="85" cy="47" r="3" fill="#51cf66" opacity="0.8" /> <text x="85" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="white">
+       A
+      </text> <!-- Y Button (Yellow) --> <circle cx="80" cy="42" r="5" fill="url(#buttonYellow3D)" stroke="#e17055" stroke-width="1" filter="url(#shadow)" /> <circle cx="80" cy="41" r="3" fill="#ffeaa7" opacity="0.8" /> <text x="80" y="44" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#2d3436">
+       Y
+      </text> <!-- B Button (Blue) --> <circle cx="80" cy="54" r="5" fill="url(#buttonBlue3D)" stroke="#0770c4" stroke-width="1" filter="url(#shadow)" /> <circle cx="80" cy="53" r="3" fill="#74b9ff" opacity="0.8" /> <text x="80" y="56" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="white">
+       B
+      </text> <!-- Analog sticks --> <circle cx="40" cy="60" r="6" fill="url(#controller3D)" stroke="#495057" stroke-width="1" filter="url(#shadow)" /> <circle cx="40" cy="59" r="4" fill="#6c757d" /> <circle cx="40" cy="58" r="2" fill="#495057" /> <circle cx="80" cy="60" r="6" fill="url(#controller3D)" stroke="#495057" stroke-width="1" filter="url(#shadow)" /> <circle cx="80" cy="59" r="4" fill="#6c757d" /> <circle cx="80" cy="58" r="2" fill="#495057" /> <!-- Center logo/brand area --> <rect x="55" y="45" width="10" height="6" rx="3" fill="url(#controller3D)" stroke="#495057" stroke-width="0.5" /> <rect x="56" y="46" width="8" height="4" rx="2" fill="#343a40" /> <circle cx="60" cy="48" r="1" fill="#28a745" />
+     </svg> Plataforma Interativa de Jogos Educativos</h1>
+    <div class="intro-section">
+     <p id="intro-text">Bem-vindo à plataforma interativa do projeto <span class="highlight">"Prevenção e Autocuidado na Saúde Reprodutiva de Mulheres e Homens"</span>.</p>
+     <p>Este projeto utiliza a <span class="highlight">tecnologia</span> para combater a desinformação e promover a saúde de forma eficiente. Criamos uma série de jogos educativos com o objetivo principal de transformar temas complexos – como <span class="highlight">puberdade, higiene, IST e planejamento</span> – em conhecimento prático e acessível.</p>
+     <h2 style="color: #2c3e50; font-size: 1.5em; margin: 30px 0 20px 0; text-align: center;">Por que a Gamificação Funciona?</h2>
+     <p>A gamificação é a chave para a <span class="highlight">retenção de conteúdo</span>. Ao interagir com desafios e cenários dentro dos jogos, o usuário:</p>
+     <p><strong>Aumenta o Engajamento:</strong> O formato de jogo torna o aprendizado mais <span class="highlight">divertido e voluntário</span>.</p>
+     <p><strong>Fortalece a Memória:</strong> A informação é assimilada através da <span class="highlight">repetição e da aplicação prática</span> em um ambiente seguro.</p>
+     <p><strong>Promove a Ação:</strong> O conhecimento adquirido é diretamente ligado à <span class="highlight">tomada de decisão consciente</span> e ao autocuidado na vida real.</p>
+     <div class="call-to-action" id="call-to-action">
+      Explore os jogos abaixo para iniciar sua jornada de conhecimento e bem-estar!
+     </div>
+    </div>
+    <div class="games-grid">
+     <div class="game-card card-puberdade">
+      <div class="card-icon">
+       👦
+      </div>
+      <div class="card-title">
+       Puberdade Masculina
+      </div>
+      <div class="card-focus">
+       Entenda as mudanças corporais e emocionais
+      </div>
+      <div class="card-description">
+       Transformações físicas, higiene pessoal, mudanças hormonais e como lidar com as emoções durante a puberdade
+      </div><a href="https://pinheiro767.github.io/Jogo-Puberdade/" target="_blank" rel="noopener noreferrer" class="card-button"> <span>🎮 Jogar Agora</span> </a>
+     </div>
+     <div class="game-card card-saude">
+      <div class="card-icon">
+       💚
+      </div>
+      <div class="card-title">
+       Saúde Reprodutiva
+      </div>
+      <div class="card-focus">
+       Prevenção e Planejamento
+      </div>
+      <div class="card-description">
+       Métodos contraceptivos, prevenção de IST, planejamento familiar e decisões conscientes sobre reprodução
+      </div><a href="https://pinheiro767.github.io/jogo-saude-reprodutiva/" target="_blank" rel="noopener noreferrer" class="card-button"> <span>🎮 Jogar Agora</span> </a>
+     </div>
+     <div class="game-card card-ciclo">
+      <div class="card-icon">
+       🌸
+      </div>
+      <div class="card-title">
+       Ciclo e Higiene Menstrual
+      </div>
+      <div class="card-focus">
+       Navegue pelas transformações femininas
+      </div>
+      <div class="card-description">
+       Ciclo menstrual, cuidados íntimos, higiene durante a menstruação e dicas para uma vida saudável
+      </div><a href="https://pinheiro767.github.io/ciclo-higiene-menstrual-cris/" target="_blank" rel="noopener noreferrer" class="card-button"> <span>🎮 Jogar Agora</span> </a>
+     </div>
+     <div class="game-card card-hpv">
+      <div class="card-icon">
+       🛡️
+      </div>
+      <div class="card-title">
+       Conhecendo o HPV
+      </div>
+      <div class="card-focus">
+       Prevenção e conhecimento
+      </div>
+      <div class="card-description">
+       O que é HPV, formas de transmissão, prevenção, vacinas e a importância dos exames regulares
+      </div><a href="https://pinheiro767.github.io/Conhecendo_hpv/" target="_blank" rel="noopener noreferrer" class="card-button"> <span>🎮 Jogar Agora</span> </a>
+     </div>
+    </div>
+    <footer class="footer">
+     <p><strong>💡 Importante:</strong> Este projeto foi desenvolvido com base em evidências científicas e diretrizes de saúde pública. Os jogos complementam, mas não substituem, o acompanhamento médico profissional.</p>
+     <p><em>Sua saúde é sua responsabilidade. Informe-se, cuide-se e tome decisões conscientes!</em></p>
+    </footer>
+   </div>
+  </main>
+  <script>
+        const defaultConfig = {
+            project_title: "Games Educativos: Saúde Reprodutiva em Jogo",
+            main_title: "🎮 Plataforma Interativa de Jogos Educativos",
+            intro_text: "Bem-vindo à plataforma interativa do projeto \"Prevenção e Autocuidado na Saúde Reprodutiva de Mulheres e Homens\".",
+            objective_text: "Este projeto utiliza a tecnologia para combater a desinformação e promover a saúde de forma eficiente. Criamos uma série de jogos educativos com o objetivo principal de transformar temas complexos – como puberdade, higiene, IST e planejamento – em conhecimento prático e acessível.",
+            call_to_action: "Explore os jogos abaixo para iniciar sua jornada de conhecimento e bem-estar!",
+            primary_color: "#667eea",
+            secondary_color: "#764ba2",
+            font_family: "Segoe UI",
+            font_size: 16
+        };
+
+        async function render(config) {
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+            const customFont = config.font_family || defaultConfig.font_family;
+            const baseSize = config.font_size || defaultConfig.font_size;
+            const baseFontStack = '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif';
+
+            // Update text content
+            document.getElementById('project-title').textContent = config.project_title || defaultConfig.project_title;
+            document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+            document.getElementById('intro-text').innerHTML = (config.intro_text || defaultConfig.intro_text).replace(/\*\*(.*?)\*\*/g, '<span class="highlight">$1</span>');
+            document.getElementById('objective-text').innerHTML = (config.objective_text || defaultConfig.objective_text).replace(/\*\*(.*?)\*\*/g, '<span class="highlight">$1</span>');
+            document.getElementById('call-to-action').textContent = config.call_to_action || defaultConfig.call_to_action;
+
+            // Apply colors
+            document.querySelector('.project-title').style.background = `linear-gradient(135deg, ${primaryColor}, ${secondaryColor})`;
+            document.querySelector('.footer').style.borderLeftColor = primaryColor;
+
+            // Apply fonts
+            document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+            // Apply font sizes
+            document.querySelector('.project-title').style.fontSize = `${baseSize * 0.8125}px`;
+            document.querySelector('h1').style.fontSize = `${baseSize * 1.75}px`;
+            document.querySelectorAll('p').forEach(p => {
+                p.style.fontSize = `${baseSize * 1.0625}px`;
+            });
+            document.querySelector('.call-to-action').style.fontSize = `${baseSize * 1.1875}px`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            window.elementSdk.setConfig({ primary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_color || defaultConfig.secondary_color,
+                        set: (value) => {
+                            config.secondary_color = value;
+                            window.elementSdk.setConfig({ secondary_color: value });
+                        }
                     }
-                    50% { 
-                        background-position: 100% 50%;
-                        transform: translateY(-3px);
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        window.elementSdk.setConfig({ font_size: value });
                     }
                 }
-            </style>
-            <p class="subtitle">
-                São games que ensinam de uma maneira simples e divertida sobre a prevenção e autocuidado na saúde reprodutiva para todas as idades - desde jovens até idosos. Explore, aprenda e cuide da sua saúde!
-            </p>
-        </div>
+            };
+        }
 
-        <div class="games-grid">
-            <div class="game-card">
-                <div class="card-content">
-                    <div class="title-with-icon">
-                        <span class="game-emoji">🌸</span>
-                        <h3 class="game-title">Higiene Menstrual</h3>
-                        <div class="click-arrow">👆</div>
-                    </div>
-                    <p class="game-description">
-                        Aprenda sobre cuidados essenciais durante o ciclo menstrual de forma interativa e educativa.
-                    </p>
-                    <a href="https://pinheiro767.github.io/ciclo-respeito-cris/" class="play-button" target="_blank" rel="noopener noreferrer">
-                        🎮 Jogar Agora
-                    </a>
-                </div>
-            </div>
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["project_title", config.project_title || defaultConfig.project_title],
+                ["main_title", config.main_title || defaultConfig.main_title],
+                ["intro_text", config.intro_text || defaultConfig.intro_text],
+                ["objective_text", config.objective_text || defaultConfig.objective_text],
+                ["call_to_action", config.call_to_action || defaultConfig.call_to_action]
+            ]);
+        }
 
-            <div class="game-card">
-                <div class="card-content">
-                    <div class="title-with-icon">
-                        <span class="game-emoji">👦</span>
-                        <h3 class="game-title">Descobrindo a Puberdade Masculina</h3>
-                        <div class="click-arrow">👆</div>
-                    </div>
-                    <p class="game-description">
-                        Explore as mudanças da puberdade masculina e aprenda sobre autocuidado de forma divertida.
-                    </p>
-                    <a href="https://pinheiro767.github.io/Jogo-Puberdade/" class="play-button" target="_blank" rel="noopener noreferrer">
-                        🎮 Jogar Agora
-                    </a>
-                </div>
-            </div>
+        // Initialize SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                render,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
 
-            <div class="game-card">
-                <div class="card-content">
-                    <div class="title-with-icon">
-                        <span class="game-emoji">❤️‍🩹</span>
-                        <h3 class="game-title">Saúde Sexual</h3>
-                        <div class="click-arrow">👆</div>
-                    </div>
-                    <p class="game-description">
-                        Descubra informações importantes sobre saúde sexual e reprodutiva através de atividades interativas.
-                    </p>
-                    <a href="https://pinheiro767.github.io/jogo-saude-reprodutiva/" class="play-button" target="_blank" rel="noopener noreferrer">
-                        🎮 Jogar Agora
-                    </a>
-                </div>
-            </div>
-        </div>
+        // iOS and accessibility optimizations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Detect device capabilities
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            
+            // Add iOS-specific viewport meta tag if not present
+            if (isIOS && !document.querySelector('meta[name="viewport"]')) {
+                const viewport = document.createElement('meta');
+                viewport.name = 'viewport';
+                viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
+                document.head.appendChild(viewport);
+            }
+            
+            // Enhanced card interactions
+            const cards = document.querySelectorAll('.game-card');
+            cards.forEach(card => {
+                if (!isTouchDevice) {
+                    // Desktop hover effects
+                    card.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-10px) scale(1.02)';
+                    });
+                    
+                    card.addEventListener('mouseleave', function() {
+                        this.style.transform = '';
+                    });
+                } else {
+                    // Enhanced touch feedback for mobile/iOS
+                    let touchStartTime;
+                    
+                    card.addEventListener('touchstart', function(e) {
+                        touchStartTime = Date.now();
+                        this.style.transform = 'scale(0.98)';
+                        this.style.transition = 'transform 0.1s ease';
+                        
+                        // Add haptic feedback on iOS
+                        if (isIOS && window.navigator.vibrate) {
+                            window.navigator.vibrate(10);
+                        }
+                    }, { passive: true });
+                    
+                    card.addEventListener('touchend', function(e) {
+                        const touchDuration = Date.now() - touchStartTime;
+                        
+                        // Restore transform
+                        this.style.transform = '';
+                        this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        
+                        // Prevent accidental clicks on very short touches
+                        if (touchDuration < 50) {
+                            e.preventDefault();
+                        }
+                    }, { passive: false });
+                    
+                    card.addEventListener('touchcancel', function() {
+                        this.style.transform = '';
+                        this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    });
+                }
+            });
 
-        <div class="footer-note">
-            ✨ Os jogos serão abertos em uma nova aba para uma melhor experiência de aprendizado
-        </div>
-    </div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f0df8c103b3472',t:'MTc2MDU0NzYzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+            // Enhanced button interactions with iOS optimizations
+            const buttons = document.querySelectorAll('.card-button');
+            buttons.forEach(button => {
+                // Add ARIA attributes for accessibility
+                button.setAttribute('role', 'button');
+                button.setAttribute('tabindex', '0');
+                button.setAttribute('aria-label', `Jogar ${button.closest('.game-card').querySelector('.card-title').textContent}`);
+                
+                // Enhanced click/touch handling
+                button.addEventListener('click', function(e) {
+                    // Prevent double-tap zoom on iOS
+                    e.preventDefault();
+                    
+                    // Create ripple effect
+                    const ripple = document.createElement('div');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    
+                    let x, y;
+                    if (e.touches && e.touches[0]) {
+                        // Touch event
+                        x = e.touches[0].clientX - rect.left - size / 2;
+                        y = e.touches[0].clientY - rect.top - size / 2;
+                    } else {
+                        // Mouse event or fallback
+                        x = (e.clientX || rect.width / 2) - rect.left - size / 2;
+                        y = (e.clientY || rect.height / 2) - rect.top - size / 2;
+                    }
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                        z-index: 1;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    // Add haptic feedback on iOS
+                    if (isIOS && window.navigator.vibrate) {
+                        window.navigator.vibrate(20);
+                    }
+                    
+                    // Navigate after animation starts
+                    setTimeout(() => {
+                        const href = this.getAttribute('href');
+                        if (href) {
+                            window.open(href, '_blank', 'noopener,noreferrer');
+                        }
+                    }, 100);
+                    
+                    // Clean up ripple
+                    setTimeout(() => {
+                        if (ripple.parentNode) {
+                            ripple.remove();
+                        }
+                    }, 600);
+                });
+                
+                // Keyboard accessibility
+                button.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+                
+                // Enhanced touch feedback for buttons
+                if (isTouchDevice) {
+                    button.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(0.95)';
+                        this.style.transition = 'transform 0.1s ease';
+                    }, { passive: true });
+                    
+                    button.addEventListener('touchend', function() {
+                        this.style.transform = '';
+                        this.style.transition = 'all 0.3s ease';
+                    }, { passive: true });
+                    
+                    button.addEventListener('touchcancel', function() {
+                        this.style.transform = '';
+                        this.style.transition = 'all 0.3s ease';
+                    });
+                }
+            });
+            
+            // iOS-specific scroll optimizations
+            if (isIOS) {
+                // Prevent rubber band scrolling
+                document.body.addEventListener('touchmove', function(e) {
+                    if (e.target === document.body) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+                
+                // Optimize scroll performance
+                const container = document.querySelector('.container');
+                if (container) {
+                    container.style.webkitOverflowScrolling = 'touch';
+                    container.style.overflowScrolling = 'touch';
+                }
+            }
+            
+            // Focus management for accessibility
+            document.addEventListener('focusin', function(e) {
+                if (e.target.matches('.card-button')) {
+                    e.target.style.outline = '3px solid #667eea';
+                    e.target.style.outlineOffset = '2px';
+                }
+            });
+            
+            document.addEventListener('focusout', function(e) {
+                if (e.target.matches('.card-button')) {
+                    e.target.style.outline = '';
+                    e.target.style.outlineOffset = '';
+                }
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'990d805ab20c01ac',t:'MTc2MDg0NzgyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
